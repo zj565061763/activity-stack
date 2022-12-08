@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.sd.lib.actstack.FActivityStack
+import com.sd.lib.actstack.fLastActivity
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
@@ -76,7 +77,7 @@ val Activity.activityState: Lifecycle.State?
     }
 
 fun logActivity(tag: String, activity: AppCompatActivity) {
-    val last = FActivityStack.last()
+    val last = fLastActivity()
     logMsg {
         """
              

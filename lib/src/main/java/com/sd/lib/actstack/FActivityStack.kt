@@ -218,6 +218,8 @@ object FActivityStack {
     }
 }
 
+fun fLastActivity(): Activity? = FActivityStack.last()
+
 internal inline fun logMsg(block: () -> String) {
     if (FActivityStack.isDebug) {
         Log.i("activity-stack", block())

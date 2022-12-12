@@ -93,10 +93,6 @@ object FActivityStack {
             removeFinishingActivity()
         }
 
-        override fun onActivityPreDestroyed(activity: Activity) {
-            removeActivity(activity)
-        }
-
         // ---------- default ----------
 
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {

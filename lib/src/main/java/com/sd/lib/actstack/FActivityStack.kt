@@ -191,22 +191,20 @@ object FActivityStack {
     private val _awaitHolder: MutableMap<Class<out Activity>, FContinuation<Activity>> by lazy { hashMapOf() }
 
     suspend fun await(clazz: Class<out Activity>): Activity {
-        val continuation = synchronized(FActivityStack) {
+        return synchronized(FActivityStack) {
             val activity = getFirst(clazz)
             if (activity != null) return activity
 
             _awaitHolder[clazz] ?: FContinuation<Activity>().also {
                 _awaitHolder[clazz] = it
             }
-        }
-        return continuation.await()
+        }.await()
     }
 
     private fun resumeAwait(activity: Activity) {
         synchronized(FActivityStack) {
-            val continuation = _awaitHolder.remove(activity.javaClass) ?: return
-            continuation.resume(activity)
-        }
+            _awaitHolder.remove(activity.javaClass)
+        }?.resume(activity)
     }
 }
 

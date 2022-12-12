@@ -10,7 +10,7 @@ import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
 
 object FActivityStack {
-    private val _objectInitFlag = AtomicBoolean(false)
+    private val _initFlag = AtomicBoolean(false)
 
     private val _activityDistinct: MutableMap<Activity, String> = WeakHashMap()
     private val _activityHolder: MutableList<Activity> = mutableListOf()
@@ -18,7 +18,7 @@ object FActivityStack {
     var isDebug = false
 
     internal fun init(context: Context) {
-        if (_objectInitFlag.compareAndSet(false, true)) {
+        if (_initFlag.compareAndSet(false, true)) {
             val application = context.applicationContext as Application
             application.registerActivityLifecycleCallbacks(_activityLifecycleCallbacks)
         }

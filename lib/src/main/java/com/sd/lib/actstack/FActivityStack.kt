@@ -7,14 +7,13 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import java.util.*
-import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.atomic.AtomicBoolean
 
 object FActivityStack {
     private val _objectInitFlag = AtomicBoolean(false)
 
     private val _activityDistinct: MutableMap<Activity, String> = WeakHashMap()
-    private val _activityHolder: MutableList<Activity> = CopyOnWriteArrayList()
+    private val _activityHolder: MutableList<Activity> = mutableListOf()
 
     var isDebug = false
 
@@ -129,20 +128,17 @@ object FActivityStack {
 
     @JvmStatic
     fun getFirst(clazz: Class<out Activity>): Activity? {
-        synchronized(FActivityStack) {
-            _activityHolder.forEach {
-                if (it.javaClass == clazz) {
-                    return it
-                }
+        return snapshot { holder ->
+            holder.find {
+                it.javaClass == clazz
             }
-            return null
         }
     }
 
     @JvmStatic
     fun finishAll() {
-        synchronized(FActivityStack) {
-            _activityHolder.forEach {
+        snapshot { holder ->
+            holder.forEach {
                 it.finish()
             }
         }
@@ -150,8 +146,8 @@ object FActivityStack {
 
     @JvmStatic
     fun finishAllExpect(activity: Activity) {
-        synchronized(FActivityStack) {
-            _activityHolder.forEach {
+        snapshot { holder ->
+            holder.forEach {
                 if (it !== activity) {
                     it.finish()
                 }
@@ -161,9 +157,9 @@ object FActivityStack {
 
     @JvmStatic
     fun finishAllExpect(vararg classes: Class<out Activity>) {
-        synchronized(FActivityStack) {
-            if (classes.isEmpty()) return
-            _activityHolder.forEach {
+        if (classes.isEmpty()) return
+        snapshot { holder ->
+            holder.forEach {
                 if (it.javaClass !in classes) {
                     it.finish()
                 }
@@ -173,9 +169,9 @@ object FActivityStack {
 
     @JvmStatic
     fun finish(vararg classes: Class<out Activity>) {
-        synchronized(FActivityStack) {
-            if (classes.isEmpty()) return
-            _activityHolder.forEach {
+        if (classes.isEmpty()) return
+        snapshot { holder ->
+            holder.forEach {
                 if (it.javaClass in classes) {
                     it.finish()
                 }
@@ -184,9 +180,9 @@ object FActivityStack {
     }
 
     @JvmStatic
-    fun snapshot(block: (List<Activity>) -> Unit) {
+    fun <T> snapshot(block: (List<Activity>) -> T): T {
         synchronized(FActivityStack) {
-            block(_activityHolder.toList())
+            return block(_activityHolder.toList())
         }
     }
 

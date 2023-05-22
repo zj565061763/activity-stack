@@ -6,7 +6,7 @@ import android.app.Application.ActivityLifecycleCallbacks
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import java.util.*
+import java.util.WeakHashMap
 import java.util.concurrent.atomic.AtomicBoolean
 
 object FActivityStack {
@@ -59,14 +59,12 @@ object FActivityStack {
 
     private fun removeActivity(activity: Activity) {
         synchronized(FActivityStack) {
-            if (activity.isFinishing) {
-                if (_activityHolder.remove(activity)) {
-                    logMsg {
-                        """
+            if (_activityHolder.remove(activity)) {
+                logMsg {
+                    """
                     ----- $activity ${_activityHolder.size}
                     ${_activityHolder.joinToString(prefix = "[", separator = ", ", postfix = "]")}
                 """.trimIndent()
-                    }
                 }
             }
         }

@@ -1,19 +1,21 @@
 package com.sd.lib.actstack
 
 import kotlinx.coroutines.CancellableContinuation
+import kotlinx.coroutines.CompletionHandler
 import kotlinx.coroutines.suspendCancellableCoroutine
-import java.util.*
+import java.util.Collections
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
 internal class FContinuation<T> {
     private val _continuationHolder: MutableList<CancellableContinuation<T>> = Collections.synchronizedList(mutableListOf())
 
-    suspend fun await(): T {
+    suspend fun await(onCancel: CompletionHandler? = null): T {
         return suspendCancellableCoroutine { cont ->
             _continuationHolder.add(cont)
             cont.invokeOnCancellation {
                 _continuationHolder.remove(cont)
+                onCancel?.invoke(it)
             }
         }
     }

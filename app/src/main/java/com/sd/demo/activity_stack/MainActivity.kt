@@ -21,6 +21,7 @@ import com.sd.demo.activity_stack.ui.theme.AppTheme
 import com.sd.lib.actstack.FActivityStack
 import com.sd.lib.actstack.fLastActivity
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -69,6 +70,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        _scope.cancel()
         logActivity("onDestroy", this)
     }
 

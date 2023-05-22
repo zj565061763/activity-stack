@@ -195,7 +195,17 @@ object FActivityStack {
             _awaitHolder[clazz] ?: FContinuation<Activity>().also {
                 _awaitHolder[clazz] = it
             }
-        }.await()
+        }.let { cont ->
+            cont.await(
+                onCancel = {
+                    if (cont.size() <= 0) {
+                        synchronized(FActivityStack) {
+                            _awaitHolder.remove(clazz)
+                        }
+                    }
+                }
+            )
+        }
     }
 
     private fun resumeAwait(activity: Activity) {

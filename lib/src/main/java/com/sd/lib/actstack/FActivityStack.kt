@@ -155,7 +155,6 @@ object FActivityStack {
 
     @JvmStatic
     fun finishAllExpect(vararg classes: Class<out Activity>) {
-        if (classes.isEmpty()) return
         snapshot { holder ->
             holder.forEach {
                 if (it.javaClass !in classes) {

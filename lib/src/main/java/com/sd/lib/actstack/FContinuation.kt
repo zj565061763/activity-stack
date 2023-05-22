@@ -40,7 +40,10 @@ internal class FContinuation<T> {
         return _continuationHolder.size
     }
 
-    private fun foreach(remove: Boolean = true, block: (CancellableContinuation<T>) -> Unit) {
+    private fun foreach(
+        remove: Boolean = true,
+        block: (CancellableContinuation<T>) -> Unit,
+    ) {
         while (_continuationHolder.isNotEmpty()) {
             val copyHolder = _continuationHolder.toList()
             copyHolder.forEach {

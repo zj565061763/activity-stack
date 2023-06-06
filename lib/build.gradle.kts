@@ -9,7 +9,7 @@ val libArtifactId = "activity-stack"
 val libVersionName = "1.0.0"
 
 android {
-    namespace ="com.sd.lib.actstack"
+    namespace ="com.sd.lib.activity.stack"
     compileSdk = libs.versions.androidCompileSdk.get().toInt()
     defaultConfig {
         minSdk = libs.versions.androidMinSdk.get().toInt()

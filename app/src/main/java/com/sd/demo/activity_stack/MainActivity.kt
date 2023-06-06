@@ -5,38 +5,25 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
-import com.sd.demo.activity_stack.ui.theme.AppTheme
+import com.sd.demo.activity_stack.databinding.ActivityMainBinding
 import com.sd.lib.actstack.FActivityStack
 import com.sd.lib.actstack.fLastActivity
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
+    private val _binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private val _scope = MainScope()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            AppTheme {
-                Content(
-                    onClick = {
-                        startActivity(Intent(this, SecondActivity::class.java))
-                    },
-                )
-            }
+        setContentView(_binding.root)
+        _binding.btn.setOnClickListener {
+            startActivity(Intent(this, SecondActivity::class.java))
         }
 
         logActivity("onCreate", this)
@@ -77,23 +64,6 @@ class MainActivity : ComponentActivity() {
     companion object {
         init {
             FActivityStack.isDebug = true
-        }
-    }
-}
-
-@Composable
-private fun Content(
-    onClick: () -> Unit,
-) {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(5.dp)
-    ) {
-        Button(
-            onClick = onClick
-        ) {
-            Text(text = "Go SecondActivity")
         }
     }
 }

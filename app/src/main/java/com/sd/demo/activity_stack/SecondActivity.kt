@@ -2,29 +2,16 @@ package com.sd.demo.activity_stack
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import com.sd.demo.activity_stack.ui.theme.AppTheme
+import com.sd.demo.activity_stack.databinding.ActivityMainBinding
 
 class SecondActivity : ComponentActivity() {
+    private val _binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            AppTheme {
-                Content(
-                    onClickFinish = {
-                        finish()
-                    },
-                )
-            }
+        setContentView(_binding.root)
+        _binding.btn.setOnClickListener {
+            finish()
         }
 
         logActivity("onCreate", this)
@@ -53,22 +40,5 @@ class SecondActivity : ComponentActivity() {
     override fun onDestroy() {
         super.onDestroy()
         logActivity("onDestroy", this)
-    }
-}
-
-@Composable
-private fun Content(
-    onClickFinish: () -> Unit,
-) {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(5.dp)
-    ) {
-        Button(
-            onClick = onClickFinish
-        ) {
-            Text(text = "finish")
-        }
     }
 }

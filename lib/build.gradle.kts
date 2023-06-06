@@ -32,7 +32,7 @@ android {
 }
 
 dependencies {
-    api(libs.kotlin.coroutines)
+    implementation(libs.kotlin.coroutines)
 }
 
 afterEvaluate {

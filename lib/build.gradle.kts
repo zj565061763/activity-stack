@@ -6,7 +6,7 @@ plugins {
 
 val libGroupId = "com.sd.lib.android"
 val libArtifactId = "activity-stack"
-val libVersionName = "1.0.0"
+val libVersionName = "1.1.0-beta01"
 
 android {
     namespace ="com.sd.lib.activity.stack"

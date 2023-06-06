@@ -9,8 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.sd.demo.activity_stack.databinding.ActivityMainBinding
-import com.sd.lib.actstack.FActivityStack
-import com.sd.lib.actstack.fLastActivity
+import com.sd.lib.activity.stack.FActivityStack
+import com.sd.lib.activity.stack.fLastActivity
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch

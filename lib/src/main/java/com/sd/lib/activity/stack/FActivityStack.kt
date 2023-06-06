@@ -1,4 +1,4 @@
-package com.sd.lib.actstack
+package com.sd.lib.activity.stack
 
 import android.app.Activity
 import android.app.Application
@@ -6,6 +6,7 @@ import android.app.Application.ActivityLifecycleCallbacks
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import com.sd.lib.activity.stack.FContinuation
 import java.util.WeakHashMap
 import java.util.concurrent.atomic.AtomicBoolean
 

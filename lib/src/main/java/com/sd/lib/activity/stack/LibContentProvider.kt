@@ -1,4 +1,4 @@
-package com.sd.lib.actstack
+package com.sd.lib.activity.stack
 
 import android.content.ContentProvider
 import android.content.ContentValues

@@ -1,4 +1,4 @@
-package com.sd.lib.actstack
+package com.sd.lib.activity.stack
 
 import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.CompletionHandler

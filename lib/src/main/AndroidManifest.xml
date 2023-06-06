@@ -2,7 +2,7 @@
 
     <application>
         <provider
-            android:name="com.sd.lib.actstack.LibContentProvider"
+            android:name="com.sd.lib.activity.stack.LibContentProvider"
             android:authorities="${applicationId}.f-cp-lib-activity-stack"
             android:exported="false" />
     </application>

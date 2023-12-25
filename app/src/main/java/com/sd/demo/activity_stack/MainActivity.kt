@@ -28,9 +28,8 @@ class MainActivity : AppCompatActivity() {
         logActivity("onCreate", this)
         _scope.launch {
             logMsg { "await SecondActivity start" }
-            FActivityStack.await(SecondActivity::class.java).let {
-                logMsg { "await SecondActivity end $it ${it.activityState}" }
-            }
+            val secondActivity = FActivityStack.await(SecondActivity::class.java)
+            logMsg { "await SecondActivity end $secondActivity ${secondActivity.activityState}" }
         }
     }
 

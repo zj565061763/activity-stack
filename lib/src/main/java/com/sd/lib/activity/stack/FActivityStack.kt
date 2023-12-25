@@ -156,10 +156,7 @@ object FActivityStack {
         return synchronized(FActivityStack) {
             val activity = getFirst(clazz)
             if (activity != null) return activity
-
-            _awaitHolder[clazz] ?: FContinuation<Activity>().also {
-                _awaitHolder[clazz] = it
-            }
+            _awaitHolder.getOrPut(clazz) { FContinuation() }
         }.let { cont ->
             cont.await(
                 onCancel = {

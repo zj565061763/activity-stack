@@ -1,10 +1,18 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <application>
+
         <provider
-            android:name="com.sd.lib.activity.stack.LibContentProvider"
-            android:authorities="${applicationId}.f-cp-lib-activity-stack"
-            android:exported="false" />
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <meta-data
+                android:name="com.sd.lib.activity.stack.ContextInitializer"
+                android:value="androidx.startup" />
+        </provider>
+
     </application>
 
 </manifest>

@@ -10,7 +10,7 @@ kotlin = "1.9.21"
 [libraries]
 
 androidx-appcompat = "androidx.appcompat:appcompat:1.6.1"
-
+androidx-startup = "androidx.startup:startup-runtime:1.1.1"
 kotlin-coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3"
 
 [plugins]

@@ -77,13 +77,7 @@ val Activity.activityState: Lifecycle.State?
     }
 
 fun logActivity(tag: String, activity: ComponentActivity) {
-    logMsg {
-        """
-             
-            $tag $activity ${activity.activityState}
-             
-        """.trimIndent()
-    }
+    logMsg { "$tag $activity ${activity.activityState}" }
 }
 
 inline fun logMsg(block: () -> String) {

@@ -84,6 +84,7 @@ object FActivityStack {
     private fun removeActivity(activity: Activity) {
         synchronized(FActivityStack) {
             if (_activityHolder.remove(activity)) {
+                _activityDistinct.remove(activity)
                 logMsg {
                     """
                     ----- $activity ${_activityHolder.size}

@@ -6,7 +6,6 @@ import android.app.Application.ActivityLifecycleCallbacks
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import com.sd.lib.activity.stack.FContinuation
 import java.util.WeakHashMap
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -37,6 +36,30 @@ object FActivityStack {
                 }
             }
             return null
+        }
+    }
+
+    private val _activityLifecycleCallbacks = object : ActivityLifecycleCallbacks {
+        override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+            addActivity(activity)
+        }
+
+        override fun onActivityStarted(activity: Activity) {
+            removeFinishingActivity()
+        }
+
+        override fun onActivityResumed(activity: Activity) {
+            removeFinishingActivity()
+        }
+
+        override fun onActivityPaused(activity: Activity) {}
+
+        override fun onActivityStopped(activity: Activity) {}
+
+        override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
+
+        override fun onActivityDestroyed(activity: Activity) {
+            removeActivity(activity)
         }
     }
 
@@ -73,47 +96,6 @@ object FActivityStack {
 
     private fun removeFinishingActivity() {
         last()
-    }
-
-    private val _activityLifecycleCallbacks = object : ActivityLifecycleCallbacks {
-
-        // ---------- pre ----------
-
-        override fun onActivityPreCreated(activity: Activity, savedInstanceState: Bundle?) {
-            addActivity(activity)
-        }
-
-        override fun onActivityPreStarted(activity: Activity) {
-            removeFinishingActivity()
-        }
-
-        override fun onActivityPreResumed(activity: Activity) {
-            removeFinishingActivity()
-        }
-
-        // ---------- default ----------
-
-        override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-            addActivity(activity)
-        }
-
-        override fun onActivityStarted(activity: Activity) {
-            removeFinishingActivity()
-        }
-
-        override fun onActivityResumed(activity: Activity) {
-            removeFinishingActivity()
-        }
-
-        override fun onActivityPaused(activity: Activity) {}
-
-        override fun onActivityStopped(activity: Activity) {}
-
-        override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
-
-        override fun onActivityDestroyed(activity: Activity) {
-            removeActivity(activity)
-        }
     }
 
     // ---------- ext ----------

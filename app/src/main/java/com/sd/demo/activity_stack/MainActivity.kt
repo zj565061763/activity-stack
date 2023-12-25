@@ -10,7 +10,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.sd.demo.activity_stack.databinding.ActivityMainBinding
 import com.sd.lib.activity.stack.FActivityStack
-import com.sd.lib.activity.stack.fLastActivity
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
@@ -78,12 +77,10 @@ val Activity.activityState: Lifecycle.State?
     }
 
 fun logActivity(tag: String, activity: ComponentActivity) {
-    val last = fLastActivity()
     logMsg {
         """
              
             $tag $activity ${activity.activityState}
-            last:$last ${last?.activityState}
              
         """.trimIndent()
     }

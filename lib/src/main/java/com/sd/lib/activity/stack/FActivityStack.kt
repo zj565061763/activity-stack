@@ -24,35 +24,20 @@ object FActivityStack {
         }
     }
 
-    @JvmStatic
-    fun last(): Activity? {
-        synchronized(FActivityStack) {
-            while (true) {
-                val activity = _activityHolder.lastOrNull() ?: break
-                if (activity.isFinishing) {
-                    removeActivity(activity)
-                } else {
-                    return activity
-                }
-            }
-            return null
-        }
-    }
-
     private val _activityLifecycleCallbacks = object : ActivityLifecycleCallbacks {
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
             addActivity(activity)
         }
 
-        override fun onActivityStarted(activity: Activity) {
-            removeFinishingActivity()
-        }
+        override fun onActivityStarted(activity: Activity) {}
 
-        override fun onActivityResumed(activity: Activity) {
-            removeFinishingActivity()
-        }
+        override fun onActivityResumed(activity: Activity) {}
 
-        override fun onActivityPaused(activity: Activity) {}
+        override fun onActivityPaused(activity: Activity) {
+            if (activity.isFinishing) {
+                removeActivity(activity)
+            }
+        }
 
         override fun onActivityStopped(activity: Activity) {}
 
@@ -93,10 +78,6 @@ object FActivityStack {
                 }
             }
         }
-    }
-
-    private fun removeFinishingActivity() {
-        last()
     }
 
     // ---------- ext ----------
@@ -198,8 +179,6 @@ object FActivityStack {
         }?.resume(activity)
     }
 }
-
-fun fLastActivity(): Activity? = FActivityStack.last()
 
 internal inline fun logMsg(block: () -> String) {
     if (FActivityStack.isDebug) {
